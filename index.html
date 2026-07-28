@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J.I Conciergerie — Gestion locative haut de gamme en Alsace</title>
+<meta name="description" content="J.I Conciergerie, gestion locative Airbnb premium à Strasbourg, Colmar et dans toute l'Alsace. Votre bien, notre passion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A2B3C;
+    --navy-2:#1E3348;
+    --navy-3:#243D56;
+    --accent:#6B9FBF;
+    --accent-light:#8BBDD8;
+    --white:#FFFFFF;
+    --off-white:#F6F8FA;
+    --text-dark:#1A2B3C;
+    --text-gray:#607080;
+    --font-serif:'Cormorant Garamond', serif;
+    --font-sans:'Montserrat', sans-serif;
+    --shadow-soft:0 20px 60px rgba(26,43,60,0.12);
+    --shadow-hard:0 30px 80px rgba(26,43,60,0.25);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--font-sans);
+    color:var(--text-dark);
+    background:var(--white);
+    line-height:1.6;
+    overflow-x:hidden;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; }
+  .container{ max-width:1200px; margin:0 auto; padding:0 24px; }
+  section{ position:relative; }
+
+  h1,h2,h3,h4{ font-family:var(--font-serif); font-weight:400; line-height:1.15; }
+  .eyebrow{
+    font-family:var(--font-sans);
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:0.75rem;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .section-head{ max-width:640px; margin:0 auto 56px; text-align:center; }
+  .section-head h2{ font-size:clamp(2.1rem,4vw,3rem); margin-top:14px; }
+  .section-head p{ color:var(--text-gray); margin-top:16px; font-size:1.05rem; }
+  .on-dark .section-head p, .on-dark p{ color:rgba(255,255,255,0.72); }
+  .on-dark .eyebrow{ color:var(--accent-light); }
+
+  em{ font-style:italic; color:var(--accent); font-family:var(--font-serif); }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(36px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal-delay-1.in-view{ transition-delay:.1s; }
+  .reveal-delay-2.in-view{ transition-delay:.2s; }
+  .reveal-delay-3.in-view{ transition-delay:.3s; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:16px 34px; border-radius:2px; font-size:0.85rem; font-weight:600;
+    letter-spacing:1px; text-transform:uppercase; transition:all .3s ease; white-space:nowrap;
+  }
+  .btn-primary{ background:var(--accent); color:var(--white); }
+  .btn-primary:hover{ background:var(--accent-light); transform:translateY(-3px); box-shadow:0 14px 30px rgba(107,159,191,0.4); }
+  .btn-outline{ border:1px solid rgba(255,255,255,0.4); color:var(--white); }
+  .btn-outline:hover{ background:rgba(255,255,255,0.1); border-color:var(--white); transform:translateY(-3px); }
+  .btn-outline-dark{ border:1px solid var(--navy); color:var(--navy); }
+  .btn-outline-dark:hover{ background:var(--navy); color:var(--white); transform:translateY(-3px); }
+
+  /* ---------- Logo ---------- */
+  .logo-mark{ color:var(--accent-light); }
+  .logo{ display:flex; align-items:center; gap:12px; }
+  .logo .logo-mark svg{ width:38px; height:22px; }
+  .logo-text{ display:flex; flex-direction:column; line-height:1.1; }
+  .logo-text .name{ font-family:var(--font-serif); font-size:1.25rem; font-weight:500; color:var(--white); }
+  .logo-text .est{ font-size:0.62rem; letter-spacing:2px; color:var(--accent-light); text-transform:uppercase; }
+  .navbar .logo-text .name{ color:var(--white); }
+
+  /* ---------- Navbar ---------- */
+  .navbar{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    padding:22px 0; transition:all .4s ease; background:transparent;
+  }
+  .navbar.scrolled{
+    background:rgba(26,43,60,0.94); backdrop-filter:blur(10px);
+    padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; }
+  .nav-links{ display:flex; align-items:center; gap:40px; }
+  .nav-links a{
+    color:rgba(255,255,255,0.85); font-size:0.86rem; font-weight:500; letter-spacing:0.4px;
+    position:relative; padding:4px 0; transition:color .3s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px;
+    background:var(--accent-light); transition:width .3s ease;
+  }
+  .nav-links a:hover{ color:var(--white); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-right{ display:flex; align-items:center; gap:28px; }
+  .hamburger{
+    display:none; flex-direction:column; gap:5px; width:30px; z-index:1200;
+  }
+  .hamburger span{ height:2px; width:100%; background:var(--white); transition:all .3s ease; }
+  .hamburger.active span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .hamburger.active span:nth-child(2){ opacity:0; }
+  .hamburger.active span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; background:var(--navy); z-index:1100;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px;
+    transform:translateY(-100%); transition:transform .5s cubic-bezier(.77,0,.18,1);
+  }
+  .mobile-menu.active{ transform:translateY(0); }
+  .mobile-menu a{ font-family:var(--font-serif); font-size:1.9rem; color:var(--white); }
+  .mobile-menu .btn{ margin-top:12px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--navy); min-height:100vh; display:flex; align-items:center;
+    padding:160px 0 90px; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:''; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:60px 60px;
+    mask-image:radial-gradient(ellipse at center, black 20%, transparent 75%);
+  }
+  .hero::after{
+    content:''; position:absolute; top:-20%; right:-10%; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(107,159,191,0.18), transparent 70%);
+    border-radius:50%;
+  }
+  .hero-inner{ position:relative; z-index:2; text-align:center; max-width:800px; margin:0 auto; }
+  .hero-logo{ display:flex; justify-content:center; margin-bottom:28px; }
+  .hero-logo svg{ width:120px; height:70px; color:var(--accent-light); }
+  .badge{
+    display:inline-block; padding:9px 22px; border:1px solid rgba(255,255,255,0.25);
+    border-radius:30px; font-size:0.78rem; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--accent-light); margin-bottom:28px; background:rgba(255,255,255,0.04);
+  }
+  .hero h1{
+    color:var(--white); font-size:clamp(2.8rem,7vw,5rem); font-weight:300; letter-spacing:-0.5px;
+  }
+  .hero h1 em{ font-weight:400; }
+  .hero-sub{
+    color:rgba(255,255,255,0.75); font-size:clamp(1rem,2vw,1.25rem); margin:26px auto 40px;
+    max-width:520px; font-weight:300;
+  }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:18px; justify-content:center; }
+  .hero-note{
+    margin-top:30px; color:rgba(255,255,255,0.5); font-size:0.82rem; letter-spacing:0.5px;
+  }
+
+  /* ---------- Stats ---------- */
+  .stats{ background:var(--off-white); padding:80px 0; }
+  .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:40px; text-align:center; }
+  .stat-num{
+    font-family:var(--font-serif); font-size:clamp(2.4rem,5vw,3.6rem); color:var(--navy); font-weight:500;
+  }
+  .stat-num span.accent-mark{ color:var(--accent); }
+  .stat-label{ color:var(--text-gray); font-size:0.85rem; letter-spacing:0.5px; margin-top:8px; text-transform:uppercase; }
+
+  /* ---------- Guarantees ---------- */
+  .guarantees{ background:var(--accent); padding:46px 0; }
+  .guarantees-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
+  .guarantee-item{ display:flex; align-items:center; gap:14px; color:var(--white); }
+  .guarantee-item .g-icon{ font-size:1.6rem; }
+  .guarantee-item strong{ display:block; font-size:0.92rem; font-weight:600; }
+  .guarantee-item span.sub{ font-size:0.78rem; opacity:0.85; }
+
+  /* ---------- Services ---------- */
+  .services{ background:var(--white); padding:120px 0; }
+  .services-intro{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:end; margin-bottom:70px; }
+  .services-intro h2{ font-size:clamp(2.2rem,4vw,3.2rem); }
+  .services-intro .eyebrow{ color:var(--accent); }
+  .services-intro p{ color:var(--text-gray); font-size:1.05rem; }
+  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .service-card{
+    position:relative; background:var(--off-white); padding:44px 34px; border-radius:6px;
+    overflow:hidden; transition:all .4s ease; border:1px solid transparent;
+  }
+  .service-card:hover{
+    transform:translateY(-8px); box-shadow:var(--shadow-soft); border-color:rgba(107,159,191,0.25); background:var(--white);
+  }
+  .service-num{
+    position:absolute; top:10px; right:20px; font-family:var(--font-serif); font-size:4.2rem;
+    color:rgba(26,43,60,0.06); font-weight:500; line-height:1;
+  }
+  .service-icon{ font-size:2.2rem; margin-bottom:22px; }
+  .service-card h3{ font-size:1.4rem; margin-bottom:12px; color:var(--navy); }
+  .service-card p{ color:var(--text-gray); font-size:0.94rem; margin-bottom:20px; }
+  .service-more{
+    color:var(--accent); font-size:0.82rem; font-weight:600; letter-spacing:0.5px;
+    text-transform:uppercase; display:inline-flex; align-items:center; gap:6px; transition:gap .3s ease;
+  }
+  .service-more:hover{ gap:12px; }
+
+  /* ---------- About ---------- */
+  .about{ background:var(--navy); padding:120px 0; }
+  .about-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center; }
+  .about-visual{
+    position:relative; aspect-ratio:1/1.05; border:1px solid rgba(255,255,255,0.15); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    background:linear-gradient(160deg, var(--navy-2), var(--navy-3));
+  }
+  .about-visual::before{
+    content:'J.I'; font-family:var(--font-serif); font-size:11rem; color:rgba(255,255,255,0.05);
+    position:absolute; font-style:italic; font-weight:500;
+  }
+  .about-visual .av-icon{ position:relative; z-index:2; color:var(--accent-light); }
+  .about-visual .av-icon svg{ width:150px; height:90px; }
+  .about-visual .corner{ position:absolute; width:46px; height:46px; border:1px solid var(--accent-light); opacity:0.5; }
+  .about-visual .corner.tl{ top:20px; left:20px; border-right:none; border-bottom:none; }
+  .about-visual .corner.br{ bottom:20px; right:20px; border-left:none; border-top:none; }
+  .about h2{ color:var(--white); font-size:clamp(2.2rem,4vw,3.1rem); margin:14px 0 26px; }
+  .about-text p{ color:rgba(255,255,255,0.72); margin-bottom:18px; font-size:1rem; }
+  .founders{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:40px; }
+  .founder-card{
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:6px;
+    padding:30px 24px; transition:all .35s ease;
+  }
+  .founder-card:hover{ background:rgba(255,255,255,0.07); border-color:rgba(139,189,216,0.4); transform:translateY(-4px); }
+  .founder-tag{
+    display:inline-block; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase;
+    color:var(--navy); background:var(--accent-light); padding:4px 10px; border-radius:20px; margin-bottom:16px;
+  }
+  .founder-card h4{ color:var(--white); font-size:1.5rem; margin-bottom:6px; }
+  .founder-role{ color:var(--accent-light); font-size:0.82rem; margin-bottom:14px; display:block; }
+  .founder-card p{ color:rgba(255,255,255,0.65); font-size:0.9rem; }
+
+  /* ---------- Pricing ---------- */
+  .pricing{ background:var(--off-white); padding:120px 0; }
+  .pricing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; align-items:stretch; }
+  .price-card{
+    background:var(--white); border-radius:8px; padding:46px 34px; border:1px solid rgba(26,43,60,0.08);
+    display:flex; flex-direction:column; transition:all .35s ease; position:relative;
+  }
+  .price-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-soft); }
+  .price-card.featured{
+    background:linear-gradient(160deg, var(--navy), var(--navy-3)); color:var(--white); transform:scale(1.04);
+    box-shadow:var(--shadow-hard); border:none;
+  }
+  .price-card.featured:hover{ transform:scale(1.04) translateY(-8px); }
+  .price-badge{
+    position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--accent);
+    color:var(--white); padding:7px 20px; border-radius:20px; font-size:0.75rem; font-weight:600;
+    letter-spacing:0.5px; white-space:nowrap;
+  }
+  .price-name{ font-family:var(--font-serif); font-size:1.7rem; margin-bottom:6px; }
+  .price-card.featured .price-name{ color:var(--white); }
+  .price-value{ font-size:clamp(2.4rem,4vw,3rem); font-weight:500; margin:14px 0 24px; font-family:var(--font-serif); }
+  .price-value span{ font-size:1rem; font-family:var(--font-sans); color:var(--text-gray); font-weight:400; }
+  .price-card.featured .price-value span{ color:rgba(255,255,255,0.6); }
+  .price-list{ flex:1; margin-bottom:30px; }
+  .price-list li{
+    padding:11px 0; border-bottom:1px solid rgba(26,43,60,0.08); font-size:0.92rem; display:flex; gap:10px;
+    color:var(--text-dark);
+  }
+  .price-card.featured .price-list li{ border-bottom-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.88); }
+  .price-list li::before{ content:'✓'; color:var(--accent); font-weight:700; }
+  .price-card.featured .price-list li::before{ color:var(--accent-light); }
+  .price-card .btn{ width:100%; }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials{ background:var(--navy); padding:120px 0; }
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .testi-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
+    padding:36px 30px; transition:all .35s ease;
+  }
+  .testi-card:hover{ background:rgba(255,255,255,0.08); transform:translateY(-6px); }
+  .testi-stars{ color:var(--accent-light); font-size:1rem; letter-spacing:2px; margin-bottom:18px; }
+  .testi-card p.quote{ color:rgba(255,255,255,0.82); font-size:0.98rem; margin-bottom:22px; font-style:italic; font-family:var(--font-serif); font-size:1.15rem; }
+  .testi-author{ display:flex; flex-direction:column; }
+  .testi-author strong{ color:var(--white); font-size:0.95rem; }
+  .testi-author span{ color:var(--accent-light); font-size:0.8rem; }
+
+  /* ---------- Local experience ---------- */
+  .local{ background:var(--navy-3); padding:120px 0; }
+  .local-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .local h2{ color:var(--white); font-size:clamp(2.2rem,4vw,3rem); margin:14px 0 22px; }
+  .local p{ color:rgba(255,255,255,0.72); margin-bottom:16px; }
+  .local-cards{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .local-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
+    padding:30px 22px; text-align:center; transition:all .3s ease;
+  }
+  .local-card:hover{ background:rgba(255,255,255,0.09); transform:translateY(-4px); }
+  .local-card .l-icon{ font-size:2rem; margin-bottom:12px; }
+  .local-card h4{ color:var(--white); font-size:1.05rem; font-weight:500; font-family:var(--font-sans); }
+
+  /* ---------- FAQ ---------- */
+  .faq{ background:var(--white); padding:120px 0; }
+  .faq-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; }
+  .faq h2{ font-size:clamp(2.2rem,4vw,3rem); margin:14px 0 20px; }
+  .faq-intro p{ color:var(--text-gray); }
+  .accordion-item{ border-bottom:1px solid rgba(26,43,60,0.12); }
+  .accordion-q{
+    width:100%; display:flex; justify-content:space-between; align-items:center; gap:20px;
+    padding:24px 0; text-align:left; font-size:1.05rem; font-weight:500; color:var(--navy);
+  }
+  .accordion-q .plus{ font-size:1.4rem; color:var(--accent); transition:transform .35s ease; flex-shrink:0; }
+  .accordion-item.open .accordion-q .plus{ transform:rotate(135deg); }
+  .accordion-a{ max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .accordion-a-inner{ padding-bottom:24px; color:var(--text-gray); font-size:0.95rem; max-width:560px; }
+
+  /* ---------- Contact ---------- */
+  .contact{ background:var(--navy); padding:120px 0; }
+  .contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; }
+  .audit-box{
+    background:linear-gradient(160deg, var(--accent), var(--navy-3)); border-radius:10px; padding:40px 34px; margin-bottom:40px;
+  }
+  .audit-box h3{ color:var(--white); font-size:1.7rem; margin-bottom:12px; }
+  .audit-box p{ color:rgba(255,255,255,0.85); font-size:0.95rem; margin-bottom:22px; }
+  .contact h2{ color:var(--white); font-size:clamp(2rem,4vw,2.8rem); }
+  .contact-info{ display:flex; flex-direction:column; gap:20px; }
+  .contact-info .ci-item{ display:flex; gap:16px; align-items:flex-start; }
+  .contact-info .ci-icon{
+    width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+  }
+  .contact-info strong{ color:var(--white); display:block; font-size:0.95rem; }
+  .contact-info span{ color:rgba(255,255,255,0.65); font-size:0.88rem; }
+  .contact-info a{ color:rgba(255,255,255,0.85); }
+  .contact-info a:hover{ color:var(--accent-light); }
+
+  .contact-form{ background:var(--white); border-radius:10px; padding:40px; box-shadow:var(--shadow-hard); }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-gray); margin-bottom:8px; font-weight:600; }
+  .field input, .field select, .field textarea{
+    width:100%; padding:14px 16px; border:1px solid rgba(26,43,60,0.15); border-radius:4px;
+    font-family:inherit; font-size:0.94rem; color:var(--text-dark); background:var(--off-white); transition:all .3s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--accent); background:var(--white); box-shadow:0 0 0 3px rgba(107,159,191,0.15);
+  }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .contact-form .btn{ width:100%; margin-top:6px; }
+  .form-success{ display:none; background:#e8f5e9; color:#2e7d32; padding:16px; border-radius:4px; margin-top:16px; font-size:0.9rem; text-align:center; }
+  .form-success.show{ display:block; }
+
+  /* ---------- Geo Zones ---------- */
+  .geo{ background:var(--navy); padding:110px 0; text-align:center; }
+  .geo h2{ color:var(--white); font-size:clamp(2.1rem,4vw,3rem); margin:14px 0 60px; }
+  .geo-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
+  .geo-card{
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
+    padding:32px 16px; transition:all .3s ease;
+  }
+  .geo-card:hover{ background:rgba(255,255,255,0.1); transform:translateY(-6px); border-color:var(--accent-light); }
+  .geo-card .g-icon{ font-size:2.1rem; margin-bottom:14px; }
+  .geo-card h4{ color:var(--white); font-size:1rem; font-weight:500; font-family:var(--font-sans); }
+
+  /* ---------- Footer ---------- */
+  .footer{ background:#0F1926; padding:70px 0 30px; }
+  .footer-top{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.08); }
+  .footer-desc{ color:rgba(255,255,255,0.5); font-size:0.88rem; max-width:320px; margin-top:16px; }
+  .footer-links{ display:flex; gap:70px; flex-wrap:wrap; }
+  .footer-col h5{ color:var(--white); font-size:0.82rem; letter-spacing:1px; text-transform:uppercase; margin-bottom:18px; }
+  .footer-col a{ display:block; color:rgba(255,255,255,0.55); font-size:0.9rem; margin-bottom:12px; transition:color .3s ease; }
+  .footer-col a:hover{ color:var(--accent-light); }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:28px; flex-wrap:wrap; gap:12px; }
+  .footer-bottom p{ color:rgba(255,255,255,0.4); font-size:0.82rem; }
+
+  /* ---------- WhatsApp float ---------- */
+  .whatsapp-float{
+    position:fixed; bottom:26px; right:26px; width:60px; height:60px; border-radius:50%;
+    background:#25D366; display:flex; align-items:center; justify-content:center; font-size:1.7rem;
+    box-shadow:0 10px 30px rgba(37,211,102,0.5); z-index:900; transition:transform .3s ease;
+  }
+  .whatsapp-float:hover{ transform:scale(1.12); }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(15,25,38,0.75); backdrop-filter:blur(4px); z-index:2000;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:0; visibility:hidden; transition:all .3s ease;
+  }
+  .modal-overlay.active{ opacity:1; visibility:visible; }
+  .modal-box{
+    background:var(--white); border-radius:10px; max-width:560px; width:100%; max-height:85vh;
+    overflow-y:auto; padding:44px; position:relative; transform:translateY(30px) scale(.97); transition:transform .3s ease;
+  }
+  .modal-overlay.active .modal-box{ transform:translateY(0) scale(1); }
+  .modal-close{
+    position:absolute; top:20px; right:20px; width:36px; height:36px; border-radius:50%;
+    background:var(--off-white); display:flex; align-items:center; justify-content:center; font-size:1.2rem;
+    color:var(--text-gray); transition:all .3s ease;
+  }
+  .modal-close:hover{ background:var(--accent); color:var(--white); }
+  .modal-icon{ font-size:2.4rem; margin-bottom:16px; }
+  .modal-box h3{ color:var(--navy); font-size:1.9rem; margin-bottom:16px; }
+  .modal-box .modal-lead{ color:var(--text-gray); margin-bottom:26px; }
+  .modal-list li{
+    padding:12px 0 12px 30px; position:relative; border-bottom:1px solid rgba(26,43,60,0.08); font-size:0.94rem; color:var(--text-dark);
+  }
+  .modal-list li::before{ content:'✓'; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .modal-box .btn{ margin-top:28px; width:100%; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .nav-links{ display:none; }
+    .desktop-cta{ display:none; }
+    .hamburger{ display:flex; }
+    .stats-grid{ grid-template-columns:repeat(2,1fr); gap:36px; }
+    .guarantees-grid{ grid-template-columns:repeat(2,1fr); }
+    .services-intro{ grid-template-columns:1fr; gap:24px; }
+    .services-grid{ grid-template-columns:repeat(2,1fr); }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-visual{ max-width:380px; margin:0 auto; }
+    .founders{ grid-template-columns:1fr; }
+    .pricing-grid{ grid-template-columns:1fr; max-width:460px; margin:0 auto; }
+    .price-card.featured{ transform:none; order:-1; }
+    .price-card.featured:hover{ transform:translateY(-8px); }
+    .testi-grid{ grid-template-columns:1fr; }
+    .local-grid{ grid-template-columns:1fr; }
+    .local-cards{ margin-top:20px; }
+    .faq-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .geo-grid{ grid-template-columns:repeat(2,1fr); }
+    .footer-top{ flex-direction:column; }
+    .footer-links{ gap:40px; }
+  }
+  @media (max-width: 600px){
+    .stats-grid{ grid-template-columns:1fr 1fr; }
+    .services-grid{ grid-template-columns:1fr; }
+    .form-row{ grid-template-columns:1fr; }
+    .geo-grid{ grid-template-columns:1fr 1fr; }
+    .hero-ctas{ flex-direction:column; width:100%; }
+    .hero-ctas .btn{ width:100%; }
+    .contact-form{ padding:28px 22px; }
+    .modal-box{ padding:30px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGO SVG (reused via template) ============ -->
+
+<!-- ============ NAVBAR ============ -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <div class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M5 55 V35 L20 22 L35 35 V55 Z"/>
+            <path d="M40 55 V25 L60 10 L80 25 V55 Z"/>
+            <path d="M85 55 V35 L100 22 L115 35 V55 Z"/>
+          </g>
+        </svg>
+      </span>
+      <span class="logo-text">
+        <span class="name">J.I Conciergerie</span>
+        <span class="est">EST. 2026</span>
+      </span>
+    </div>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#services">Services</a>
+      <a href="#apropos">À propos</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#avis">Avis</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#contact" class="btn btn-primary desktop-cta">Audit gratuit</a>
+      <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ MOBILE MENU ============ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#apropos" class="mobile-link">À propos</a>
+  <a href="#tarifs" class="mobile-link">Tarifs</a>
+  <a href="#avis" class="mobile-link">Avis</a>
+  <a href="#faq" class="mobile-link">FAQ</a>
+  <a href="#contact" class="btn btn-primary mobile-link">Audit gratuit</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="accueil">
+  <div class="container hero-inner">
+    <div class="hero-logo">
+      <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M5 55 V35 L20 22 L35 35 V55 Z"/>
+          <path d="M40 55 V25 L60 10 L80 25 V55 Z"/>
+          <path d="M85 55 V35 L100 22 L115 35 V55 Z"/>
+        </g>
+      </svg>
+    </div>
+    <span class="badge">Strasbourg · Colmar · Toute l'Alsace</span>
+    <h1>Votre bien,<br><em>notre passion.</em></h1>
+    <p class="hero-sub">Gestion locative haut de gamme — tranquillité absolue</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">🎯 Audit gratuit de mon bien</a>
+      <a href="#services" class="btn btn-outline">Nos services</a>
+    </div>
+    <p class="hero-note">Sans engagement · Réponse sous 2h · 100% gratuit</p>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="reveal">
+      <div class="stat-num"><span class="counter" data-target="98" data-suffix="%">0</span></div>
+      <div class="stat-label">Satisfaction client</div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="stat-num"><span class="counter" data-target="20" data-suffix="+">0</span></div>
+      <div class="stat-label">Biens gérés</div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="stat-num"><span class="counter" data-target="24" data-suffix="h/7">0</span></div>
+      <div class="stat-label">Disponibles</div>
+    </div>
+    <div class="reveal reveal-delay-3">
+      <div class="stat-num"><span class="counter" data-target="40" data-suffix="%+">0</span></div>
+      <div class="stat-label">Revenus supplémentaires</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEES ============ -->
+<section class="guarantees">
+  <div class="container guarantees-grid">
+    <div class="guarantee-item">
+      <span class="g-icon">✅</span>
+      <span><strong>Sans engagement</strong><span class="sub">Résiliable à tout moment</span></span>
+    </div>
+    <div class="guarantee-item">
+      <span class="g-icon">🛡️</span>
+      <span><strong>Satisfaction garantie</strong><span class="sub">Votre confiance, notre priorité</span></span>
+    </div>
+    <div class="guarantee-item">
+      <span class="g-icon">📍</span>
+      <span><strong>100% Local Alsace</strong><span class="sub">Strasbourg · Colmar · Alsace</span></span>
+    </div>
+    <div class="guarantee-item">
+      <span class="g-icon">⚡</span>
+      <span><strong>Réponse sous 2h</strong><span class="sub">7 jours sur 7</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-intro reveal">
+      <div>
+        <span class="eyebrow">Nos services</span>
+        <h2>Une gestion complète,<br>pensée dans le détail</h2>
+      </div>
+      <p>De la création de votre annonce à l'accueil de vos voyageurs, nous prenons en charge chaque étape de la gestion de votre bien avec l'exigence d'une maison hôtelière de prestige.</p>
+    </div>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="apropos">
+  <div class="container about-grid">
+    <div class="about-visual reveal">
+      <span class="corner tl"></span>
+      <span class="corner br"></span>
+      <span class="av-icon">
+        <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M5 55 V35 L20 22 L35 35 V55 Z"/>
+            <path d="M40 55 V25 L60 10 L80 25 V55 Z"/>
+            <path d="M85 55 V35 L100 22 L115 35 V55 Z"/>
+          </g>
+        </svg>
+      </span>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">Notre histoire</span>
+      <h2>Deux amis, une vision commune</h2>
+      <p>J.I Conciergerie est née de la rencontre de deux passionnés du service d'exception, convaincus qu'une conciergerie Airbnb pouvait s'inspirer des plus hauts standards de l'hôtellerie de luxe.</p>
+      <p>Ensemble, Jules et Imanol ont fondé une conciergerie à taille humaine, ancrée en Alsace, où chaque bien est traité avec la même rigueur et la même attention qu'une suite de palace.</p>
+      <div class="founders">
+        <div class="founder-card">
+          <span class="founder-tag">2 étoiles Michelin</span>
+          <h4>Jules</h4>
+          <span class="founder-role">Co-fondateur &amp; Directeur</span>
+          <p>Issu de la restauration gastronomique, Jules a forgé son excellence dans des restaurants récompensés de 2 étoiles Michelin. Rigueur, organisation et service d'exception sont au cœur de son ADN.</p>
+        </div>
+        <div class="founder-card">
+          <span class="founder-tag">Palace 5 étoiles</span>
+          <h4>Imanol</h4>
+          <span class="founder-role">Co-fondateur &amp; Directeur</span>
+          <p>Concierge et réceptionniste dans un palace 5 étoiles, Imanol maîtrise l'art de l'accueil et de l'anticipation. Chaque voyageur bénéficie d'une attention digne des plus grands établissements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="tarifs">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Tarifs</span>
+      <h2>Une formule pour chaque propriétaire</h2>
+      <p>Des offres transparentes, sans frais cachés, adaptées à vos besoins et à vos objectifs de revenus.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-name">Essentiel</div>
+        <div class="price-value">16<span> % des revenus</span></div>
+        <ul class="price-list">
+          <li>Création &amp; optimisation de l'annonce</li>
+          <li>Gestion des réservations</li>
+          <li>Communication voyageurs 7j/7</li>
+          <li>Check-in &amp; check-out personnalisé</li>
+          <li>Coordination du ménage</li>
+          <li>Reporting mensuel</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-dark">Choisir cette formule</a>
+      </div>
+      <div class="price-card featured reveal reveal-delay-1">
+        <span class="price-badge">⭐ Recommandé</span>
+        <div class="price-name">Prestige</div>
+        <div class="price-value">22<span> % des revenus</span></div>
+        <ul class="price-list">
+          <li>Tout le pack Essentiel</li>
+          <li>Photographie professionnelle</li>
+          <li>Linge hôtelier &amp; kit de bienvenue fournis</li>
+          <li>Produits consommables (café, thé, savon...)</li>
+          <li>Maintenance &amp; petites réparations</li>
+          <li>Optimisation tarifaire dynamique</li>
+          <li>Service de conciergerie pour les voyageurs</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Choisir cette formule</a>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-name">Sur Mesure</div>
+        <div class="price-value" style="font-size:2.2rem">Devis</div>
+        <ul class="price-list">
+          <li>Services entièrement personnalisés</li>
+          <li>Multi-biens (tarif dégressif)</li>
+          <li>Conciergerie premium complète</li>
+          <li>Services additionnels à la carte</li>
+          <li>Accompagnement dédié</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline-dark">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials" id="avis">
+  <div class="container">
+    <div class="section-head on-dark reveal">
+      <span class="eyebrow">Témoignages</span>
+      <h2 style="color:#fff">Ils nous ont confié leur bien</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="quote">"Grâce à J.I Conciergerie, mon appartement affiche complet chaque année pendant les marchés de Noël. Une équipe sérieuse et à l'écoute."</p>
+        <div class="testi-author"><strong>Sophie M.</strong><span>Strasbourg Centre</span></div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="quote">"+35% de revenus dès la première année. Les bons plans de Jules sur les restaurants font toute la différence pour mes voyageurs."</p>
+        <div class="testi-author"><strong>Thomas B.</strong><span>Colmar</span></div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="quote">"Leur connaissance de l'Alsace est incroyable. Mes voyageurs repartent enchantés à chaque séjour, je n'ai plus aucun souci à gérer."</p>
+        <div class="testi-author"><strong>Amélie D.</strong><span>Obernai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOCAL EXPERIENCE ============ -->
+<section class="local">
+  <div class="container local-grid">
+    <div class="reveal">
+      <span class="eyebrow">Expérience locale</span>
+      <h2>Des guides passionnés,<br>pas de simples gestionnaires</h2>
+      <p>Formé dans des restaurants 2 étoiles Michelin, Jules connaît les meilleures adresses gastronomiques d'Alsace et les partage personnellement avec vos voyageurs.</p>
+      <p>Ancien concierge dans un palace 5 étoiles, Imanol dévoile à chaque séjour les expériences incontournables de la région — des châteaux cachés aux plus belles routes des vins.</p>
+      <a href="#contact" class="btn btn-primary" style="margin-top:20px">Confier mon bien</a>
+    </div>
+    <div class="local-cards reveal reveal-delay-1">
+      <div class="local-card"><div class="l-icon">🍽️</div><h4>Gastronomie</h4></div>
+      <div class="local-card"><div class="l-icon">🍷</div><h4>Route des vins</h4></div>
+      <div class="local-card"><div class="l-icon">🎄</div><h4>Marchés de Noël</h4></div>
+      <div class="local-card"><div class="l-icon">🏰</div><h4>Expériences cachées</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="container faq-grid">
+    <div class="faq-intro reveal">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Vous vous posez des questions ?</h2>
+      <p>Retrouvez ici les réponses aux questions les plus fréquentes. Pour toute autre demande, notre équipe reste disponible 7j/7.</p>
+    </div>
+    <div class="accordion reveal" id="accordion"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">Contact</span>
+      <h2 style="margin:14px 0 30px">Parlons de votre bien</h2>
+      <div class="audit-box">
+        <h3>🎯 Audit gratuit</h3>
+        <p>Estimation de vos revenus potentiels, analyse de votre annonce, conseils personnalisés — sans engagement et sans frais.</p>
+        <a href="#contactForm" class="btn btn-primary">Demander mon audit</a>
+      </div>
+      <div class="contact-info">
+        <div class="ci-item">
+          <span class="ci-icon">✉️</span>
+          <span><strong>Email</strong><a href="mailto:jiconciergeri@gmail.com">jiconciergeri@gmail.com</a></span>
+        </div>
+        <div class="ci-item">
+          <span class="ci-icon">📞</span>
+          <span><strong>Jules</strong><a href="tel:+33645392278">06 45 39 22 78</a></span>
+        </div>
+        <div class="ci-item">
+          <span class="ci-icon">📞</span>
+          <span><strong>Imanol</strong><a href="tel:+33611349171">06 11 34 91 71</a></span>
+        </div>
+        <div class="ci-item">
+          <span class="ci-icon">🕒</span>
+          <span><strong>Horaires</strong><span>7j/7 — réponse sous 2h</span></span>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form reveal reveal-delay-1" id="contactForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" required>
+        </div>
+        <div class="field">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="telephone">Téléphone</label>
+          <input type="tel" id="telephone" name="telephone" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="formule">Formule souhaitée</label>
+        <select id="formule" name="formule">
+          <option value="essentiel">Essentiel — 16%</option>
+          <option value="prestige">Prestige — 22%</option>
+          <option value="mesure">Sur Mesure — Devis</option>
+          <option value="audit">Audit gratuit uniquement</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Parlez-nous de votre bien..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+      <div class="form-success" id="formSuccess">Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 2h.</div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ GEO ZONES ============ -->
+<section class="geo">
+  <div class="container">
+    <h2 class="reveal">Nous intervenons dans toute l'Alsace</h2>
+    <div class="geo-grid">
+      <div class="geo-card reveal"><div class="g-icon">🏙️</div><h4>Strasbourg</h4></div>
+      <div class="geo-card reveal reveal-delay-1"><div class="g-icon">🏡</div><h4>Colmar</h4></div>
+      <div class="geo-card reveal reveal-delay-2"><div class="g-icon">🏘️</div><h4>Obernai</h4></div>
+      <div class="geo-card reveal reveal-delay-3"><div class="g-icon">🍇</div><h4>Route des vins</h4></div>
+      <div class="geo-card reveal"><div class="g-icon">🏔️</div><h4>Vosges alsaciennes</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="logo">
+          <span class="logo-mark">
+            <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M5 55 V35 L20 22 L35 35 V55 Z"/>
+                <path d="M40 55 V25 L60 10 L80 25 V55 Z"/>
+                <path d="M85 55 V35 L100 22 L115 35 V55 Z"/>
+              </g>
+            </svg>
+          </span>
+          <span class="logo-text">
+            <span class="name">J.I Conciergerie</span>
+            <span class="est">EST. 2026</span>
+          </span>
+        </div>
+        <p class="footer-desc">Gestion locative haut de gamme en Alsace. Votre bien, notre passion.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Navigation</h5>
+          <a href="#services">Services</a>
+          <a href="#apropos">À propos</a>
+          <a href="#tarifs">Tarifs</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a href="mailto:jiconciergeri@gmail.com">jiconciergeri@gmail.com</a>
+          <a href="tel:+33645392278">Jules — 06 45 39 22 78</a>
+          <a href="tel:+33611349171">Imanol — 06 11 34 91 71</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 J.I Conciergerie. Tous droits réservés.</p>
+      <p>Strasbourg · Colmar · Alsace</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ WHATSAPP FLOAT ============ -->
+<a href="https://chat.whatsapp.com/HouG8zyKon840ksl8uf7Nr" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Nous contacter sur WhatsApp">💬</a>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- Data: services ---------------- */
+  var services = [
+    {
+      icon:"📸", title:"Création d'annonce",
+      desc:"Photos pro, SEO, tarification dynamique, multi-plateformes",
+      lead:"Une annonce qui se démarque, c'est la première clé de votre succès locatif. Nous créons une présentation irréprochable de votre bien pour maximiser vos réservations.",
+      items:[
+        "Séance photo professionnelle de votre logement",
+        "Rédaction et optimisation SEO de l'annonce",
+        "Tarification dynamique ajustée au marché",
+        "Diffusion multi-plateformes (Airbnb, Booking, Abritel...)",
+        "Mise en valeur des points forts de votre logement"
+      ]
+    },
+    {
+      icon:"🗝️", title:"Accueil des voyageurs",
+      desc:"Check-in personnalisé, guide local, disponibilité 24h/24",
+      lead:"Chaque voyageur mérite un accueil digne des plus belles maisons. Nous soignons chaque arrivée pour garantir une expérience mémorable dès les premières minutes.",
+      items:[
+        "Check-in personnalisé et remise des clés",
+        "Guide local sur-mesure rédigé par nos soins",
+        "Disponibilité et assistance 24h/24",
+        "Gestion des arrivées et départs tardifs",
+        "Accueil chaleureux représentant votre image"
+      ]
+    },
+    {
+      icon:"✨", title:"Ménage &amp; Linge",
+      desc:"Standards hôteliers, linge qualité palace, contrôle qualité photo",
+      lead:"La propreté est non négociable dans notre métier. Nous appliquons des standards hôteliers stricts à chaque changement de voyageur.",
+      items:[
+        "Ménage complet aux standards hôteliers",
+        "Linge de qualité palace fourni et entretenu",
+        "Contrôle qualité photo après chaque prestation",
+        "Réassort des produits d'accueil",
+        "Inspection systématique avant chaque arrivée"
+      ]
+    },
+    {
+      icon:"💬", title:"Communication",
+      desc:"Réponse sous 1h, gestion avis, réclamations, fidélisation",
+      lead:"Une communication rapide et professionnelle fait toute la différence dans les avis de vos voyageurs. Nous gérons chaque échange avec attention.",
+      items:[
+        "Réponse aux voyageurs sous 1h, jour et nuit",
+        "Gestion et modération des avis clients",
+        "Traitement rapide des réclamations",
+        "Actions de fidélisation des voyageurs",
+        "Communication multicanal (messagerie, téléphone, email)"
+      ]
+    },
+    {
+      icon:"🔧", title:"Maintenance",
+      desc:"Inspection régulière, artisans de confiance, rapport mensuel",
+      lead:"Un bien bien entretenu, c'est un bien qui rapporte durablement. Nous surveillons et entretenons votre logement en continu.",
+      items:[
+        "Inspection régulière du logement",
+        "Réseau d'artisans de confiance en Alsace",
+        "Interventions rapides en cas de besoin",
+        "Rapport mensuel d'état du bien",
+        "Prévention active des dégradations"
+      ]
+    },
+    {
+      icon:"📊", title:"Reporting &amp; Optimisation",
+      desc:"Dashboard temps réel, rapport mensuel, pricing dynamique",
+      lead:"La transparence est au cœur de notre relation. Vous suivez vos revenus et la performance de votre bien à tout moment.",
+      items:[
+        "Dashboard de revenus en temps réel",
+        "Rapport mensuel détaillé de performance",
+        "Pricing dynamique selon la demande",
+        "Analyse de la concurrence locale",
+        "Recommandations d'optimisation personnalisées"
+      ]
+    },
+    {
+      icon:"🎩", title:"Conciergerie Premium",
+      desc:"Réservation restaurants, visites châteaux, activités, route des vins",
+      lead:"Nos fondateurs partagent leur expertise gastronomique et hôtelière pour offrir à vos voyageurs des expériences alsaciennes inoubliables.",
+      items:[
+        "Réservation dans des restaurants gastronomiques",
+        "Organisation de visites de châteaux",
+        "Activités sportives sur mesure",
+        "Découverte guidée de la route des vins",
+        "Expériences exclusives et confidentielles en Alsace"
+      ]
+    }
+  ];
+
+  var servicesGrid = document.getElementById('servicesGrid');
+  services.forEach(function(s, i){
+    var num = String(i+1).padStart(2,'0');
+    var card = document.createElement('div');
+    card.className = 'service-card reveal reveal-delay-' + ((i % 3) + 1);
+    card.innerHTML =
+      '<span class="service-num">'+num+'</span>' +
+      '<div class="service-icon">'+s.icon+'</div>' +
+      '<h3>'+s.title+'</h3>' +
+      '<p>'+s.desc+'</p>' +
+      '<button class="service-more" data-index="'+i+'">En savoir plus →</button>';
+    servicesGrid.appendChild(card);
+  });
+
+  /* ---------------- Modal ---------------- */
+  var overlay = document.getElementById('modalOverlay');
+  var modalContent = document.getElementById('modalContent');
+  var modalClose = document.getElementById('modalClose');
+
+  function openModal(index){
+    var s = services[index];
+    var itemsHtml = s.items.map(function(it){ return '<li>'+it+'</li>'; }).join('');
+    modalContent.innerHTML =
+      '<div class="modal-icon">'+s.icon+'</div>' +
+      '<h3>'+s.title+'</h3>' +
+      '<p class="modal-lead">'+s.lead+'</p>' +
+      '<ul class="modal-list">'+itemsHtml+'</ul>' +
+      '<a href="#contact" class="btn btn-primary" id="modalCta">Demander un devis gratuit</a>';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalCta').addEventListener('click', closeModal);
+  }
+  function closeModal(){
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  servicesGrid.addEventListener('click', function(e){
+    var btn = e.target.closest('.service-more');
+    if(btn){ openModal(parseInt(btn.getAttribute('data-index'),10)); }
+  });
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay){ closeModal(); } });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeModal(); } });
+
+  /* ---------------- FAQ ---------------- */
+  var faqData = [
+    {
+      q:"Comment se déroule la prise en charge de mon bien ?",
+      a:"Après un audit gratuit de votre logement, nous établissons ensemble une stratégie personnalisée : création ou reprise de l'annonce, mise en place des outils de gestion, puis lancement de la commercialisation. Vous êtes accompagné à chaque étape."
+    },
+    {
+      q:"Puis-je bloquer des dates pour un usage personnel ?",
+      a:"Bien sûr, vous restez propriétaire de votre bien. Vous pouvez bloquer les dates de votre choix pour un usage personnel via votre calendrier, en nous prévenant simplement à l'avance."
+    },
+    {
+      q:"Comment sont calculés mes revenus ?",
+      a:"Nos honoraires sont calculés en pourcentage des revenus générés par les réservations, selon la formule choisie. Vous recevez un reporting mensuel détaillé et transparent de l'ensemble de vos revenus et dépenses."
+    },
+    {
+      q:"Que se passe-t-il en cas de dégradation ?",
+      a:"Chaque réservation est encadrée par une caution et les protections des plateformes partenaires. En cas de dégradation avérée, nous constituons le dossier et engageons les démarches nécessaires auprès du voyageur ou de l'assurance."
+    },
+    {
+      q:"Avec quelles plateformes travaillez-vous ?",
+      a:"Nous diffusons votre annonce sur Airbnb, Booking.com, Abritel et d'autres plateformes complémentaires selon la stratégie la plus adaptée à votre bien et à votre zone géographique."
+    },
+    {
+      q:"Quelle est la durée d'engagement ?",
+      a:"Aucun engagement de durée n'est requis. Notre collaboration est sans engagement et résiliable à tout moment, car nous préférons vous convaincre par la qualité de notre service."
+    }
+  ];
+
+  var accordion = document.getElementById('accordion');
+  faqData.forEach(function(item, i){
+    var el = document.createElement('div');
+    el.className = 'accordion-item';
+    el.innerHTML =
+      '<button class="accordion-q" aria-expanded="false">'+
+        '<span>'+item.q+'</span><span class="plus">+</span>'+
+      '</button>'+
+      '<div class="accordion-a"><div class="accordion-a-inner">'+item.a+'</div></div>';
+    accordion.appendChild(el);
+  });
+  accordion.addEventListener('click', function(e){
+    var q = e.target.closest('.accordion-q');
+    if(!q) return;
+    var item = q.parentElement;
+    var answer = item.querySelector('.accordion-a');
+    var isOpen = item.classList.contains('open');
+
+    accordion.querySelectorAll('.accordion-item.open').forEach(function(openItem){
+      openItem.classList.remove('open');
+      openItem.querySelector('.accordion-a').style.maxHeight = null;
+      openItem.querySelector('.accordion-q').setAttribute('aria-expanded','false');
+    });
+
+    if(!isOpen){
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+      q.setAttribute('aria-expanded','true');
+    }
+  });
+
+  /* ---------------- Navbar scroll ---------------- */
+  var navbar = document.getElementById('navbar');
+  function onScroll(){
+    if(window.scrollY > 40){ navbar.classList.add('scrolled'); }
+    else{ navbar.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  /* ---------------- Mobile menu ---------------- */
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function(){
+    var active = hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    hamburger.setAttribute('aria-expanded', active ? 'true' : 'false');
+    document.body.style.overflow = active ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      hamburger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ---------------- Reveal on scroll ---------------- */
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.15 });
+
+  function observeReveals(){
+    document.querySelectorAll('.reveal:not(.in-view)').forEach(function(el){
+      revealObserver.observe(el);
+    });
+  }
+  observeReveals();
+
+  /* ---------------- Animated counters ---------------- */
+  var counters = document.querySelectorAll('.counter');
+  var countersDone = false;
+  var counterObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && !countersDone){
+        countersDone = true;
+        counters.forEach(function(counter){
+          var target = parseInt(counter.getAttribute('data-target'),10);
+          var suffix = counter.getAttribute('data-suffix') || '';
+          var current = 0;
+          var duration = 1600;
+          var start = null;
+          function step(timestamp){
+            if(!start) start = timestamp;
+            var progress = Math.min((timestamp - start) / duration, 1);
+            current = Math.floor(progress * target);
+            counter.textContent = current + suffix;
+            if(progress < 1){ requestAnimationFrame(step); }
+            else{ counter.textContent = target + suffix; }
+          }
+          requestAnimationFrame(step);
+        });
+        counterObserver.disconnect();
+      }
+    });
+  }, { threshold:0.4 });
+  if(counters.length){ counterObserver.observe(document.querySelector('.stats')); }
+
+  /* ---------------- Contact form ---------------- */
+  var contactForm = document.getElementById('contactForm');
+  var formSuccess = document.getElementById('formSuccess');
+  contactForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    formSuccess.classList.add('show');
+    contactForm.reset();
+    setTimeout(function(){ formSuccess.classList.remove('show'); }, 6000);
+  });
+
+})();
+</script>
+</body>
+</html>
