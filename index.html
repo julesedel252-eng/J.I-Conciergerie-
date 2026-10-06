@@ -760,7 +760,11 @@
         </div>
       </div>
     </div>
-    <form class="contact-form reveal reveal-delay-1" id="contactForm">
+    <form class="contact-form reveal reveal-delay-1" id="contactForm" name="demande-audit" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="demande-audit">
+      <p style="position:absolute;left:-9999px">
+        <label>Ne pas remplir si vous êtes humain : <input name="bot-field"></label>
+      </p>
       <div class="form-row">
         <div class="field">
           <label for="prenom">Prénom</label>
@@ -1138,14 +1142,45 @@
   }, { threshold:0.4 });
   if(counters.length){ counterObserver.observe(document.querySelector('.stats')); }
 
-  /* ---------------- Contact form ---------------- */
+  /* ---------------- Contact form (Netlify Forms) ---------------- */
   var contactForm = document.getElementById('contactForm');
   var formSuccess = document.getElementById('formSuccess');
+  var submitBtn = contactForm.querySelector('button[type="submit"]');
+
+  function encodeForm(data){
+    return Object.keys(data).map(function(key){
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
+  }
+
   contactForm.addEventListener('submit', function(e){
     e.preventDefault();
-    formSuccess.classList.add('show');
-    contactForm.reset();
-    setTimeout(function(){ formSuccess.classList.remove('show'); }, 6000);
+    var formData = new FormData(contactForm);
+    var data = {};
+    formData.forEach(function(value, key){ data[key] = value; });
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeForm(data)
+    })
+    .then(function(){
+      formSuccess.textContent = 'Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 2h.';
+      formSuccess.classList.add('show');
+      contactForm.reset();
+    })
+    .catch(function(){
+      formSuccess.textContent = "Une erreur est survenue. Contactez-nous directement par téléphone ou email.";
+      formSuccess.classList.add('show');
+    })
+    .finally(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Envoyer ma demande';
+      setTimeout(function(){ formSuccess.classList.remove('show'); }, 8000);
+    });
   });
 
 })();
