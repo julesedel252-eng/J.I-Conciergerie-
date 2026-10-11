@@ -280,7 +280,7 @@
 
   /* ---------- Testimonials ---------- */
   .testimonials{ background:var(--navy); padding:120px 0; }
-  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .testi-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 420px)); gap:28px; justify-content:center; max-width:920px; margin:0 auto; }
   .testi-card{
     background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
     padding:36px 30px; transition:all .35s ease;
@@ -302,9 +302,12 @@
     background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px;
     padding:30px 22px; text-align:center; transition:all .3s ease;
   }
+  .local-card{ cursor:pointer; }
   .local-card:hover{ background:rgba(255,255,255,0.09); transform:translateY(-4px); }
+  .local-card:focus-visible{ outline:2px solid var(--accent-light); outline-offset:2px; }
   .local-card .l-icon{ font-size:2rem; margin-bottom:12px; }
-  .local-card h4{ color:var(--white); font-size:1.05rem; font-weight:500; font-family:var(--font-sans); }
+  .local-card h4{ color:var(--white); font-size:1.05rem; font-weight:500; font-family:var(--font-sans); margin-bottom:6px; }
+  .local-card .l-hint{ color:var(--accent-light); font-size:0.74rem; letter-spacing:0.5px; text-transform:uppercase; opacity:0.75; }
 
   /* ---------- FAQ ---------- */
   .faq{ background:var(--white); padding:120px 0; }
@@ -690,11 +693,6 @@
         <p class="quote">"+35% de revenus dès la première année. Les bons plans de Jules sur les restaurants font toute la différence pour mes voyageurs."</p>
         <div class="testi-author"><strong>Thomas B.</strong><span>Colmar</span></div>
       </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-stars">★★★★★</div>
-        <p class="quote">"Leur connaissance de l'Alsace est incroyable. Mes voyageurs repartent enchantés à chaque séjour, je n'ai plus aucun souci à gérer."</p>
-        <div class="testi-author"><strong>Amélie D.</strong><span>Obernai</span></div>
-      </div>
     </div>
   </div>
 </section>
@@ -709,11 +707,11 @@
       <p>Ancien concierge dans un palace 5 étoiles, Imanol dévoile à chaque séjour les expériences incontournables de la région — des châteaux cachés aux plus belles routes des vins.</p>
       <a href="#contact" class="btn btn-primary" style="margin-top:20px">Confier mon bien</a>
     </div>
-    <div class="local-cards reveal reveal-delay-1">
-      <div class="local-card"><div class="l-icon">🍽️</div><h4>Gastronomie</h4></div>
-      <div class="local-card"><div class="l-icon">🍷</div><h4>Route des vins</h4></div>
-      <div class="local-card"><div class="l-icon">🎄</div><h4>Marchés de Noël</h4></div>
-      <div class="local-card"><div class="l-icon">🏰</div><h4>Expériences cachées</h4></div>
+    <div class="local-cards reveal reveal-delay-1" id="localCards">
+      <div class="local-card" data-index="0" role="button" tabindex="0" aria-haspopup="dialog"><div class="l-icon">🍽️</div><h4>Gastronomie</h4><span class="l-hint">En savoir plus</span></div>
+      <div class="local-card" data-index="1" role="button" tabindex="0" aria-haspopup="dialog"><div class="l-icon">🍷</div><h4>Route des vins</h4><span class="l-hint">En savoir plus</span></div>
+      <div class="local-card" data-index="2" role="button" tabindex="0" aria-haspopup="dialog"><div class="l-icon">🎄</div><h4>Marchés de Noël</h4><span class="l-hint">En savoir plus</span></div>
+      <div class="local-card" data-index="3" role="button" tabindex="0" aria-haspopup="dialog"><div class="l-icon">🏰</div><h4>Expériences cachées</h4><span class="l-hint">En savoir plus</span></div>
     </div>
   </div>
 </section>
@@ -874,6 +872,14 @@
   </div>
 </div>
 
+<!-- ============ LOCAL EXPERIENCE MODAL ============ -->
+<div class="modal-overlay" id="localModalOverlay">
+  <div class="modal-box" id="localModalBox" role="dialog" aria-modal="true">
+    <button class="modal-close" id="localModalClose" aria-label="Fermer">✕</button>
+    <div id="localModalContent"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   "use strict";
@@ -1009,6 +1015,88 @@
   modalClose.addEventListener('click', closeModal);
   overlay.addEventListener('click', function(e){ if(e.target === overlay){ closeModal(); } });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeModal(); } });
+
+  /* ---------------- Local experience modal ---------------- */
+  var localExperiences = [
+    {
+      icon:"🍽️", title:"Gastronomie",
+      lead:"L'Alsace est une terre de gastronomie d'exception, reconnue par de nombreuses étoiles Michelin. Jules partage personnellement avec vos voyageurs ses adresses coup de cœur, de la winstub traditionnelle à la table étoilée.",
+      items:[
+        "Spécialités à ne pas manquer : choucroute, baeckeoffe, tarte flambée, kougelhopf",
+        "Winstubs authentiques à Strasbourg, pour une ambiance conviviale et des plats du terroir",
+        "Tables étoilées recommandées personnellement par Jules selon les envies de vos voyageurs",
+        "Accords mets-vins avec les crus d'Alsace (Riesling, Gewurztraminer, Pinot Gris...)",
+        "Réservations facilitées grâce à notre réseau de restaurateurs locaux"
+      ]
+    },
+    {
+      icon:"🍷", title:"Route des vins",
+      lead:"La Route des Vins d'Alsace serpente sur plus de 170 km à travers des villages de carte postale et des vignobles classés Grand Cru. Une expérience incontournable à faire vivre à vos voyageurs.",
+      items:[
+        "Villages à ne pas manquer : Riquewihr, Eguisheim, Ribeauvillé, Kaysersberg",
+        "Dégustations dans des domaines viticoles familiaux sélectionnés par nos soins",
+        "Meilleure période pour visiter : d'avril à octobre, vendanges en septembre-octobre",
+        "Circuits à vélo ou en voiture selon le temps disponible de vos voyageurs",
+        "Suggestions personnalisées d'itinéraires selon leurs envies"
+      ]
+    },
+    {
+      icon:"🎄", title:"Marchés de Noël",
+      lead:"Strasbourg, capitale de Noël, et le marché de Colmar comptent parmi les plus beaux d'Europe. Une période à très forte demande où nous accompagnons vos voyageurs pour en profiter pleinement.",
+      items:[
+        "Marché de Strasbourg : de fin novembre au 31 décembre, plus de 300 chalets",
+        "Marché de Colmar : ambiance féerique autour de la Petite Venise",
+        "Conseil : privilégier les visites en semaine pour éviter l'affluence du week-end",
+        "Illuminations et vin chaud, incontournables de la saison",
+        "Période à très forte demande : pensez à anticiper vos réservations dès l'été"
+      ]
+    },
+    {
+      icon:"🏰", title:"Expériences cachées",
+      lead:"Au-delà des sites touristiques classiques, Imanol dévoile à vos voyageurs les trésors méconnus de l'Alsace pour un séjour hors des sentiers battus.",
+      items:[
+        "Château du Haut-Koenigsbourg : un panorama exceptionnel sur la plaine d'Alsace",
+        "La Petite France à Strasbourg au lever du jour, loin de la foule",
+        "Randonnées secrètes dans les Vosges alsaciennes",
+        "Villages pittoresques méconnus, hors des circuits touristiques classiques",
+        "Expériences sur-mesure construites selon les envies de chaque voyageur"
+      ]
+    }
+  ];
+
+  var localOverlay = document.getElementById('localModalOverlay');
+  var localModalContent = document.getElementById('localModalContent');
+  var localModalClose = document.getElementById('localModalClose');
+  var localCards = document.getElementById('localCards');
+
+  function openLocalModal(index){
+    var exp = localExperiences[index];
+    var itemsHtml = exp.items.map(function(it){ return '<li>'+it+'</li>'; }).join('');
+    localModalContent.innerHTML =
+      '<div class="modal-icon">'+exp.icon+'</div>' +
+      '<h3>'+exp.title+'</h3>' +
+      '<p class="modal-lead">'+exp.lead+'</p>' +
+      '<ul class="modal-list">'+itemsHtml+'</ul>';
+    localOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLocalModal(){
+    localOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  localCards.addEventListener('click', function(e){
+    var card = e.target.closest('.local-card');
+    if(card){ openLocalModal(parseInt(card.getAttribute('data-index'),10)); }
+  });
+  localCards.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){
+      var card = e.target.closest('.local-card');
+      if(card){ e.preventDefault(); openLocalModal(parseInt(card.getAttribute('data-index'),10)); }
+    }
+  });
+  localModalClose.addEventListener('click', closeLocalModal);
+  localOverlay.addEventListener('click', function(e){ if(e.target === localOverlay){ closeLocalModal(); } });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeLocalModal(); } });
 
   /* ---------------- FAQ ---------------- */
   var faqData = [
