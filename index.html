@@ -359,6 +359,23 @@
   .contact-form .btn{ width:100%; margin-top:6px; }
   .form-success{ display:none; background:#e8f5e9; color:#2e7d32; padding:16px; border-radius:4px; margin-top:16px; font-size:0.9rem; text-align:center; }
   .form-success.show{ display:block; }
+  .field-consent{ margin-bottom:22px; }
+  .field-consent .consent-label{ display:flex; align-items:flex-start; gap:10px; cursor:pointer; text-transform:none; }
+  .consent-label input[type="checkbox"]{ width:auto; margin-top:3px; flex-shrink:0; accent-color:var(--accent); cursor:pointer; }
+  .consent-label span{ font-size:0.82rem; color:var(--text-gray); line-height:1.5; }
+  .link-inline{ color:var(--accent); text-decoration:underline; font-size:inherit; font-family:inherit; display:inline; padding:0; }
+  .link-inline:hover{ color:var(--navy); }
+  .legal-footer-links{ display:flex; gap:20px; flex-wrap:wrap; }
+  .legal-footer-links button{ color:rgba(255,255,255,0.4); font-size:0.82rem; text-decoration:underline; }
+  .legal-footer-links button:hover{ color:var(--accent-light); }
+  .legal-modal-box{ max-width:680px; }
+  .legal-modal-box h3{ color:var(--navy); font-size:1.6rem; margin-bottom:6px; }
+  .legal-modal-box .legal-updated{ color:var(--text-gray); font-size:0.8rem; margin-bottom:24px; display:block; }
+  .legal-modal-box h4{ font-family:var(--font-sans); font-size:0.95rem; font-weight:600; color:var(--navy); margin:22px 0 8px; }
+  .legal-modal-box p{ color:var(--text-dark); font-size:0.92rem; margin-bottom:10px; line-height:1.65; }
+  .legal-modal-box ul{ margin:8px 0 8px 20px; }
+  .legal-modal-box li{ list-style:disc; color:var(--text-dark); font-size:0.92rem; margin-bottom:6px; line-height:1.55; }
+  .legal-placeholder{ background:#fff4e5; color:#8a5a00; padding:2px 6px; border-radius:3px; font-size:0.85em; font-weight:600; }
 
   /* ---------- Geo Zones ---------- */
   .geo{ background:var(--navy); padding:110px 0; text-align:center; }
@@ -796,6 +813,12 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" placeholder="Parlez-nous de votre bien..."></textarea>
       </div>
+      <div class="field field-consent">
+        <label class="consent-label">
+          <input type="checkbox" name="consentement" required>
+          <span>J'accepte que mes données soient utilisées par J.I Conciergerie pour traiter ma demande, conformément à la <button type="button" class="link-inline" id="openPrivacyFromForm">politique de confidentialité</button>.</span>
+        </label>
+      </div>
       <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
       <div class="form-success" id="formSuccess">Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 2h.</div>
     </form>
@@ -856,6 +879,10 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 J.I Conciergerie. Tous droits réservés.</p>
+      <div class="legal-footer-links">
+        <button type="button" id="openLegalMentions">Mentions légales</button>
+        <button type="button" id="openPrivacyPolicy">Politique de confidentialité</button>
+      </div>
       <p>Strasbourg · Colmar · Alsace</p>
     </div>
   </div>
@@ -869,6 +896,71 @@
   <div class="modal-box" id="modalBox" role="dialog" aria-modal="true">
     <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
     <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ============ MENTIONS LÉGALES MODAL ============ -->
+<div class="modal-overlay" id="legalModalOverlay">
+  <div class="modal-box legal-modal-box" id="legalModalBox" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <button class="modal-close" id="legalModalClose" aria-label="Fermer">✕</button>
+    <h3 id="legalModalTitle">Mentions légales</h3>
+    <span class="legal-updated">Dernière mise à jour : octobre 2026</span>
+
+    <h4>Éditeur du site</h4>
+    <p>
+      Nom et prénom : <span class="legal-placeholder">[À compléter — nom et prénom du titulaire de la micro-entreprise]</span><br>
+      Statut : Micro-entrepreneur (entreprise individuelle)<br>
+      SIRET : <span class="legal-placeholder">[À compléter — numéro SIRET]</span><br>
+      Adresse : <span class="legal-placeholder">[À compléter — adresse complète]</span><br>
+      Email : <a href="mailto:jiconciergerie2026@gmail.com">jiconciergerie2026@gmail.com</a><br>
+      Téléphone : 06 45 39 22 78 (Jules) / 06 11 34 91 71 (Imanol)
+    </p>
+
+    <h4>Directeur de la publication</h4>
+    <p><span class="legal-placeholder">[À compléter — nom et prénom]</span>, en qualité de titulaire de la micro-entreprise éditrice du site.</p>
+
+    <h4>Hébergement du site</h4>
+    <p>
+      Netlify, Inc.<br>
+      44 Montgomery Street, Suite 300, San Francisco, California 94104, États-Unis<br>
+      <a href="https://www.netlify.com" target="_blank" rel="noopener">www.netlify.com</a>
+    </p>
+
+    <h4>Propriété intellectuelle</h4>
+    <p>L'ensemble des contenus présents sur ce site (textes, logo, graphismes) est la propriété de J.I Conciergerie, sauf mention contraire. Toute reproduction, même partielle, est interdite sans autorisation préalable.</p>
+  </div>
+</div>
+
+<!-- ============ POLITIQUE DE CONFIDENTIALITÉ MODAL ============ -->
+<div class="modal-overlay" id="privacyModalOverlay">
+  <div class="modal-box legal-modal-box" id="privacyModalBox" role="dialog" aria-modal="true" aria-labelledby="privacyModalTitle">
+    <button class="modal-close" id="privacyModalClose" aria-label="Fermer">✕</button>
+    <h3 id="privacyModalTitle">Politique de confidentialité</h3>
+    <span class="legal-updated">Dernière mise à jour : octobre 2026</span>
+
+    <h4>Responsable du traitement</h4>
+    <p>J.I Conciergerie, représentée par <span class="legal-placeholder">[À compléter — nom et prénom]</span>, joignable à <a href="mailto:jiconciergerie2026@gmail.com">jiconciergerie2026@gmail.com</a>.</p>
+
+    <h4>Données collectées</h4>
+    <p>Lorsque vous remplissez le formulaire de contact, nous collectons : prénom, nom, email, téléphone, formule souhaitée et le message que vous rédigez.</p>
+
+    <h4>Finalité du traitement</h4>
+    <p>Ces données sont utilisées exclusivement pour répondre à votre demande (audit gratuit, devis, prise de contact) et vous recontacter à ce sujet.</p>
+
+    <h4>Base légale</h4>
+    <p>Le traitement repose sur votre consentement, donné en cochant la case dédiée avant l'envoi du formulaire.</p>
+
+    <h4>Destinataires</h4>
+    <p>Vos données sont accessibles uniquement par les fondateurs de J.I Conciergerie (Jules et Imanol). La transmission technique du formulaire est assurée par Netlify (hébergeur du site), qui agit en tant que sous-traitant.</p>
+
+    <h4>Durée de conservation</h4>
+    <p>Vos données sont conservées 3 ans à compter de notre dernier échange, puis supprimées.</p>
+
+    <h4>Cookies et traceurs</h4>
+    <p>Ce site n'utilise actuellement aucun cookie de suivi ni outil d'analyse d'audience.</p>
+
+    <h4>Vos droits</h4>
+    <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données. Pour exercer ces droits, contactez-nous à <a href="mailto:jiconciergerie2026@gmail.com">jiconciergerie2026@gmail.com</a>. Vous pouvez également introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a>.</p>
   </div>
 </div>
 
@@ -1097,6 +1189,31 @@
   localModalClose.addEventListener('click', closeLocalModal);
   localOverlay.addEventListener('click', function(e){ if(e.target === localOverlay){ closeLocalModal(); } });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeLocalModal(); } });
+
+  /* ---------------- Legal modals ---------------- */
+  function setupSimpleModal(overlayId, closeId, openTriggers){
+    var overlay = document.getElementById(overlayId);
+    var closeBtn = document.getElementById(closeId);
+    function open(){
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function close(){
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    openTriggers.forEach(function(id){
+      var trigger = document.getElementById(id);
+      if(trigger){ trigger.addEventListener('click', open); }
+    });
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay){ close(); } });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ close(); } });
+    return { open: open, close: close };
+  }
+
+  setupSimpleModal('legalModalOverlay', 'legalModalClose', ['openLegalMentions']);
+  setupSimpleModal('privacyModalOverlay', 'privacyModalClose', ['openPrivacyPolicy', 'openPrivacyFromForm']);
 
   /* ---------------- FAQ ---------------- */
   var faqData = [
